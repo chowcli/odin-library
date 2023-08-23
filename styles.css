@@ -1,0 +1,80 @@
+html {
+  box-sizing: border-box;
+}
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+  margin: 0px;
+  padding: 0px;
+}
+
+:root {
+  --brown: #6c3428;
+  --light-brown: #dac0a3;
+  --cream: #fff6dc;
+  --sage-green: #c4c1a4;
+  --box-shadow: 0px 5px 10px rgba(100, 100, 100, 0.3);
+  --brightness: brightness(90%);
+}
+
+/* custom font */
+@font-face {
+  font-family: "Nunito Sans";
+  src: url(fonts/NunitoSans-VariableFont.woff2) format("woff2")
+      tech("variations"),
+    url(fonts/NunitoSans-VariableFont.woff2) format("woff2-variations");
+  font-weight: 200 1000;
+}
+
+html body {
+  font-family: "Nunito Sans";
+  background-color: var(--light-brown);
+}
+
+/* Styling header */
+.header {
+  min-width: 100vw;
+  max-width: 150px;
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  /* position: fixed; */
+  padding: 20px;
+
+  background-color: var(--cream);
+  box-shadow: var(--box-shadow);
+}
+
+h1 {
+  color: var(--brown);
+  font-size: 3.5rem;
+  font-weight: 800;
+}
+
+.header .add {
+  cursor: pointer;
+  color: white;
+  font-size: 1.5rem;
+  font-weight: 600;
+
+  background-color: var(--sage-green);
+  border: none;
+  border-radius: 10px;
+
+  padding: 15px 30px;
+}
+
+.add:hover {
+  filter: var(--brightness);
+}
+
+/* Styling container */
+.main-container {
+  padding: 20px 40px;
+}
+
+.books-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+}
