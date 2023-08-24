@@ -17,5 +17,82 @@
     <div class="main-container">
       <div class="books-container"></div>
     </div>
+
+    <!-- modal dialog containing the form -->
+    <dialog class="modal" open>
+      <h2>Add New Book</h2>
+      <button class="close">
+        <img src="images/close.svg" alt="close-icon" class="svg" />
+      </button>
+      <form class="book-info">
+        <div class="b-title">
+          <label for="title">Title*</label>
+          <input
+            type="text"
+            name="book-title"
+            id="title"
+            required
+            maxlength="45" />
+        </div>
+
+        <div class="author-name">
+          <label for="authorName">Author*</label>
+          <input
+            type="text"
+            name="author-name"
+            id="authorName"
+            required
+            maxlength="45" />
+        </div>
+
+        <div class="pageNum">
+          <label for="pageNums">Number Of Pages</label>
+          <input
+            type="number"
+            name="page-numbers"
+            id="pageNums"
+            max="1000000" />
+        </div>
+
+        <div class="language">
+          <label for="language">Language</label>
+          <input
+            type="text"
+            name="book-language"
+            id="language"
+            maxlength="20" />
+        </div>
+
+        <div class="date">
+          <label for="publishDate">Publishing Date</label>
+          <input type="date" name="public-date" id="publishDate" />
+        </div>
+
+        <div class="readStatus">
+          <label for="readStatus">Read Status*</label>
+          <select name="read-status" id="readStatus">
+            <option value="tbr">To Be Read</option>
+            <option value="ongoing">Ongoing</option>
+            <option value="completed">Completed</option>
+            <option value="paused">On Hold</option>
+            <option value="dropped">Dropped</option>
+            <option value="re-read">Re-reading</option>
+            <option value="wishlist">On Wishlist</option>
+          </select>
+        </div>
+      </form>
+
+      <div class="action-btn">
+        <button class="add" form="book-info">
+          <img src="images/plus.svg" alt="add-icon" class="svg" />
+          <span>Add</span>
+        </button>
+
+        <button class="reset" form="book-info">
+          <img src="images/reload.svg" alt="reset-icon" class="svg" />
+          <span>Reset</span>
+        </button>
+      </div>
+    </dialog>
   </body>
 </html>
