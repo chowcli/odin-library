@@ -11,7 +11,7 @@
   <body>
     <div class="header">
       <h1>Library</h1>
-      <button class="add">Add book</button>
+      <button class="add" id="add-big">Add book</button>
     </div>
 
     <div class="main-container">
@@ -19,12 +19,12 @@
     </div>
 
     <!-- modal dialog containing the form -->
-    <dialog class="modal" open>
+    <dialog class="modal">
       <h2>Add New Book</h2>
       <button class="close">
         <img src="images/close.svg" alt="close-icon" class="svg" />
       </button>
-      <form class="book-info">
+      <form id="book-info" method="dialog">
         <div class="b-title">
           <label for="title">Title*</label>
           <input
@@ -83,12 +83,12 @@
       </form>
 
       <div class="action-btn">
-        <button class="add" form="book-info">
+        <button class="add" id="add-small" form="book-info">
           <img src="images/plus.svg" alt="add-icon" class="svg" />
           <span>Add</span>
         </button>
 
-        <button class="reset" form="book-info">
+        <button class="reset">
           <img src="images/reload.svg" alt="reset-icon" class="svg" />
           <span>Reset</span>
         </button>
