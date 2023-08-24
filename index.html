@@ -24,6 +24,7 @@
       <button class="close">
         <img src="images/close.svg" alt="close-icon" class="svg" />
       </button>
+
       <form id="book-info" method="dialog">
         <div class="b-title">
           <label for="title">Title*</label>
@@ -70,7 +71,8 @@
 
         <div class="readStatus">
           <label for="readStatus">Read Status*</label>
-          <select name="read-status" id="readStatus">
+          <select name="read-status" id="readStatus" required>
+            <option value="" disabled hidden>Choose here</option>
             <option value="tbr">To Be Read</option>
             <option value="ongoing">Ongoing</option>
             <option value="completed">Completed</option>
