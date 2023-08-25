@@ -7,8 +7,13 @@ const addBig = document.getElementById("add-big");
 const addSmall = document.getElementById("add-small");
 
 // Interact with modal
-addBig.addEventListener("click", () => modal.showModal());
-closeModal.addEventListener("click", () => modal.close());
+addBig.addEventListener("click", () => {
+  modal.showModal();
+  clearInput();
+});
+closeModal.addEventListener("click", () => {
+  modal.close();
+});
 
 // Object constructor for library
 const myLibrary = [];
@@ -22,9 +27,9 @@ function Book(title, author, pages, language, date, status) {
   this.status = status;
 }
 
-Book.prototype.addBookToLibrary = function (book) {
+function addBookToLibrary(book) {
   myLibrary.push(book);
-};
+}
 
 // Create new book object and take value from user input
 function createBookObject() {
@@ -35,12 +40,32 @@ function createBookObject() {
   const date = document.getElementById("publishDate").value;
   const status = document.getElementById("readStatus").value;
 
-  const book = new Book(title, author, pages, language, date, status);
+  if (title === "" || author === "" || status === "") {
+    return null;
+  }
 
-  book.addBookToLibrary(book);
+  const book = new Book(title, author, pages, language, date, status);
+  return book;
 }
 
-addSmall.addEventListener("click", createBookObject);
+// Check if there are two same book
+function avoidDuplicate(book) {
+  return myLibrary.some(existBook => existBook.title === book.title);
+}
+
+addSmall.addEventListener("click", () => {
+  const book = createBookObject();
+
+  if (book === null) {
+    return;
+  }
+  if (avoidDuplicate(book)) {
+    alert("This book is already exist in your library!");
+    return;
+  }
+
+  addBookToLibrary(book);
+});
 
 // Clear form fields
 function clearInput() {
