@@ -15,7 +15,21 @@
     </div>
 
     <div class="main-container">
-      <div class="books-container"></div>
+      <div class="books-container">
+        <div class="book-card">
+          <h3 class="title">AAAAA AAAAAAAA</h3>
+          <p class="author">By:</p>
+          <p class="pages">Number of pages:</p>
+          <p class="language">Language:</p>
+          <p class="date">Published:</p>
+          <p class="status">Status:</p>
+
+          <div class="card-btn">
+            <button class="changeBtn">Change</button>
+            <button class="deleteBtn">Delete</button>
+          </div>
+        </div>
+      </div>
     </div>
 
     <!-- modal dialog containing the form -->
@@ -33,7 +47,7 @@
             name="book-title"
             id="title"
             required
-            maxlength="45" />
+            maxlength="40" />
         </div>
 
         <div class="author-name">
@@ -43,16 +57,12 @@
             name="author-name"
             id="authorName"
             required
-            maxlength="45" />
+            maxlength="40" />
         </div>
 
         <div class="pageNum">
           <label for="pageNums">Number Of Pages</label>
-          <input
-            type="number"
-            name="page-numbers"
-            id="pageNums"
-            max="1000000" />
+          <input type="number" name="page-numbers" id="pageNums" max="100000" />
         </div>
 
         <div class="language">
