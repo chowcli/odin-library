@@ -30,20 +30,7 @@ function addBookToLibrary(book) {
   myLibrary.push(book);
 }
 
-// Interact with delete button, change button using event delegation
-bookContainer.addEventListener("click", event => {
-  const { target } = event;
-
-  if (target.classList.contains("deleteBtn")) {
-    const bookCard = target.closest(".book-card");
-    const bookID = bookCard.getAttribute("data-id");
-
-    removeBookCardElement(bookID);
-    removeBookFromLibrary(bookID);
-    return;
-  }
-});
-
+// Function definitions
 function removeBookFromLibrary(id) {
   const bookIndex = myLibrary.findIndex(book => (book.ID = id));
   if (bookIndex !== -1) {
@@ -57,37 +44,6 @@ function removeBookCardElement(dataId) {
     bookCard.remove();
   }
 }
-
-// Event delegation for modal
-modal.addEventListener("click", event => {
-  const { target } = event;
-
-  if (target.classList.contains("close")) {
-    modal.close();
-    return;
-  }
-
-  if (target.classList.contains("add-small")) {
-    const book = createBookObject();
-
-    if (book === null) {
-      return;
-    }
-    if (avoidDuplicate(book)) {
-      alert("This book is already exist in your library!");
-      return;
-    }
-    book.setBookID(); // create unique book id
-
-    addBookToLibrary(book);
-    createCard(book);
-    return;
-  }
-
-  if (target.classList.contains("reset")) {
-    clearInput();
-  }
-});
 
 // Create book card
 function createCard(book) {
@@ -157,3 +113,49 @@ function clearInput() {
   document.getElementById("publishDate").value = "";
   document.getElementById("readStatus").value = "";
 }
+
+// Event listeners
+// Interact with delete button, change button using event delegation
+bookContainer.addEventListener("click", event => {
+  const { target } = event;
+
+  if (target.classList.contains("deleteBtn")) {
+    const bookCard = target.closest(".book-card");
+    const bookID = bookCard.getAttribute("data-id");
+
+    removeBookCardElement(bookID);
+    removeBookFromLibrary(bookID);
+    return;
+  }
+});
+
+// Event delegation for modal
+modal.addEventListener("click", event => {
+  const { target } = event;
+
+  if (target.classList.contains("close")) {
+    modal.close();
+    return;
+  }
+
+  if (target.id === "add-small") {
+    const book = createBookObject();
+
+    if (book === null) {
+      return;
+    }
+    if (avoidDuplicate(book)) {
+      alert("This book is already exist in your library!");
+      return;
+    }
+    book.setBookID(); // create unique book id
+
+    addBookToLibrary(book);
+    createCard(book);
+    return;
+  }
+
+  if (target.classList.contains("reset")) {
+    clearInput();
+  }
+});
