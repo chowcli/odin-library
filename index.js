@@ -4,6 +4,9 @@ const modal = document.querySelector(".modal");
 const closeModal = document.querySelector(".close");
 const resetBtn = document.querySelector(".reset");
 
+const changeBtn = document.querySelector(".changeBtn");
+const deleteBtn = document.querySelector(".deleteBtn");
+
 const addBig = document.getElementById("add-big");
 const addSmall = document.getElementById("add-small");
 
@@ -27,6 +30,10 @@ function Book(title, author, pages, language, date, status) {
   this.date = date;
   this.status = status;
 }
+
+Book.prototype.setBookID = function () {
+  this.ID = Math.floor(Math.random() * Math.floor(Math.random() * Date.now()));
+};
 
 function addBookToLibrary(book) {
   myLibrary.push(book);
@@ -54,6 +61,7 @@ function avoidDuplicate(book) {
   return myLibrary.some(existBook => existBook.title === book.title);
 }
 
+// Add book to library and create book card
 addSmall.addEventListener("click", () => {
   const book = createBookObject();
 
@@ -64,6 +72,7 @@ addSmall.addEventListener("click", () => {
     alert("This book is already exist in your library!");
     return;
   }
+  book.setBookID(); // create unique book id
 
   addBookToLibrary(book);
   createCard(book);
@@ -85,6 +94,7 @@ resetBtn.addEventListener("click", clearInput);
 function createCard(book) {
   const bookCard = document.createElement("div");
   bookCard.classList.add("book-card");
+  bookCard.setAttribute("data-id", book.ID); // assign data attribute with unique id to book card
 
   const cardDetail = [
     { tag: "h3", class: "title", text: `${book.title}` },
@@ -113,9 +123,35 @@ function createCard(book) {
     element.classList.add(`${btnText.toLowerCase()}Btn`);
     element.textContent = btnText;
 
+    if (btnText === "Delete") {
+      element.setAttribute("data-id", book.ID);
+    }
+
     cardBtns.appendChild(element);
   });
   bookCard.appendChild(cardBtns);
 
   bookContainer.appendChild(bookCard);
 }
+
+// Interact with delete button
+function removeBookFromLibrary(id) {
+  const bookIndex = myLibrary.findIndex(book => (book.ID = id));
+  if (bookIndex !== -1) {
+    myLibrary.splice(bookIndex, 1);
+  }
+}
+
+function removeBookCardElement(dataId) {
+  const bookCard = document.querySelector(`[data-id="${dataId}"]`);
+  if (bookCard) {
+    bookCard.remove();
+  }
+}
+
+deleteBtn.addEventListener("click", () => {
+  const id = deleteBtn.getAttribute("data-id");
+
+  removeBookCardElement(id);
+  removeBookFromLibrary(id);
+});
