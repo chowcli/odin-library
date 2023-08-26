@@ -1,4 +1,5 @@
 // Declare variable
+const bookContainer = document.querySelector(".books-container");
 const modal = document.querySelector(".modal");
 const closeModal = document.querySelector(".close");
 const resetBtn = document.querySelector(".reset");
@@ -78,3 +79,42 @@ function clearInput() {
 }
 
 resetBtn.addEventListener("click", clearInput);
+
+// Create book card
+function createCard(book) {
+  const bookCard = document.createElement("div");
+  bookCard.classList.add("book-card");
+
+  const cardDetail = [
+    { tag: "h3", class: "title", text: `${book.title}` },
+    { tag: "p", class: "author", text: `By: ${book.author}` },
+    { tag: "p", class: "pages", text: `Number of pages: ${book.pages}` },
+    { tag: "p", class: "language", text: `Language: ${book.language}` },
+    { tag: "p", class: "date", text: `Published: ${book.date}` },
+    { tag: "p", class: "status", text: `Status: ${book.status}` },
+  ];
+
+  // Add heading and content to book card
+  cardDetail.forEach(item => {
+    const element = document.createElement(item.tag);
+    element.classList.add(item.class);
+    element.textContent = item.text;
+
+    bookCard.appendChild(element);
+  });
+
+  // Add button to book card
+  const cardBtns = document.createElement("div");
+  cardBtns.classList.add("card-btn");
+
+  ["Change", "Delete"].forEach(btnText => {
+    const element = document.createElement("button");
+    element.classList.add(`${btnText.toLowerCase()}Btn`);
+    element.textContent = btnText;
+
+    cardBtns.appendChild(element);
+  });
+  bookCard.appendChild(cardBtns);
+
+  bookContainer.appendChild(bookCard);
+}
