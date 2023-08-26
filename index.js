@@ -1,19 +1,13 @@
 // Declare variable
 const bookContainer = document.querySelector(".books-container");
 const modal = document.querySelector(".modal");
-const closeModal = document.querySelector(".close");
-const resetBtn = document.querySelector(".reset");
 
 const addBig = document.getElementById("add-big");
-const addSmall = document.getElementById("add-small");
 
-// Interact with modal
+// Open modal
 addBig.addEventListener("click", () => {
   modal.showModal();
   clearInput();
-});
-closeModal.addEventListener("click", () => {
-  modal.close();
 });
 
 // Object constructor for library
@@ -36,56 +30,64 @@ function addBookToLibrary(book) {
   myLibrary.push(book);
 }
 
-// Create new book object and take value from user input
-function createBookObject() {
-  const title = document.getElementById("title").value;
-  const author = document.getElementById("authorName").value;
-  const pages = document.getElementById("pageNums").value;
-  const language = document.getElementById("language").value;
-  const date = document.getElementById("publishDate").value;
-  const status = document.getElementById("readStatus").value;
+// Interact with delete button, change button using event delegation
+bookContainer.addEventListener("click", event => {
+  const { target } = event;
 
-  if (title === "" || author === "" || status === "") {
-    return null;
-  }
+  if (target.classList.contains("deleteBtn")) {
+    const bookCard = target.closest(".book-card");
+    const bookID = bookCard.getAttribute("data-id");
 
-  const book = new Book(title, author, pages, language, date, status);
-  return book;
-}
-
-// Check if there are two same book
-function avoidDuplicate(book) {
-  return myLibrary.some(existBook => existBook.title === book.title);
-}
-
-// Add book to library and create book card
-addSmall.addEventListener("click", () => {
-  const book = createBookObject();
-
-  if (book === null) {
+    removeBookCardElement(bookID);
+    removeBookFromLibrary(bookID);
     return;
   }
-  if (avoidDuplicate(book)) {
-    alert("This book is already exist in your library!");
-    return;
-  }
-  book.setBookID(); // create unique book id
-
-  addBookToLibrary(book);
-  createCard(book);
 });
 
-// Clear form fields
-function clearInput() {
-  document.getElementById("title").value = "";
-  document.getElementById("authorName").value = "";
-  document.getElementById("pageNums").value = "";
-  document.getElementById("language").value = "";
-  document.getElementById("publishDate").value = "";
-  document.getElementById("readStatus").value = "";
+function removeBookFromLibrary(id) {
+  const bookIndex = myLibrary.findIndex(book => (book.ID = id));
+  if (bookIndex !== -1) {
+    myLibrary.splice(bookIndex, 1);
+  }
 }
 
-resetBtn.addEventListener("click", clearInput);
+function removeBookCardElement(dataId) {
+  const bookCard = document.querySelector(`[data-id="${dataId}"]`);
+  if (bookCard) {
+    bookCard.remove();
+  }
+}
+
+// Event delegation for modal
+modal.addEventListener("click", event => {
+  const { target } = event;
+
+  if (target.classList.contains("close")) {
+    modal.close();
+    return;
+  }
+
+  if (target.classList.contains("add-small")) {
+    const book = createBookObject();
+
+    if (book === null) {
+      return;
+    }
+    if (avoidDuplicate(book)) {
+      alert("This book is already exist in your library!");
+      return;
+    }
+    book.setBookID(); // create unique book id
+
+    addBookToLibrary(book);
+    createCard(book);
+    return;
+  }
+
+  if (target.classList.contains("reset")) {
+    clearInput();
+  }
+});
 
 // Create book card
 function createCard(book) {
@@ -127,29 +129,31 @@ function createCard(book) {
   bookContainer.appendChild(bookCard);
 }
 
-// Interact with delete button, change button using event delegation
-function removeBookFromLibrary(id) {
-  const bookIndex = myLibrary.findIndex(book => (book.ID = id));
-  if (bookIndex !== -1) {
-    myLibrary.splice(bookIndex, 1);
+function createBookObject() {
+  const title = document.getElementById("title").value;
+  const author = document.getElementById("authorName").value;
+  const pages = document.getElementById("pageNums").value;
+  const language = document.getElementById("language").value;
+  const date = document.getElementById("publishDate").value;
+  const status = document.getElementById("readStatus").value;
+
+  if (title === "" || author === "" || status === "") {
+    return null;
   }
+
+  const book = new Book(title, author, pages, language, date, status);
+  return book;
 }
 
-function removeBookCardElement(dataId) {
-  const bookCard = document.querySelector(`[data-id="${dataId}"]`);
-  if (bookCard) {
-    bookCard.remove();
-  }
+function avoidDuplicate(book) {
+  return myLibrary.some(existBook => existBook.title === book.title);
 }
 
-bookContainer.addEventListener("click", event => {
-  const { target } = event;
-
-  if (target.classList.contains("deleteBtn")) {
-    const bookCard = target.closest(".book-card");
-    const bookID = bookCard.getAttribute("data-id");
-
-    removeBookCardElement(bookID);
-    removeBookFromLibrary(bookID);
-  }
-});
+function clearInput() {
+  document.getElementById("title").value = "";
+  document.getElementById("authorName").value = "";
+  document.getElementById("pageNums").value = "";
+  document.getElementById("language").value = "";
+  document.getElementById("publishDate").value = "";
+  document.getElementById("readStatus").value = "";
+}
