@@ -51,7 +51,7 @@ html body {
 
 /* Styling header */
 .header {
-  min-width: 100vw;
+  min-width: 100%;
   max-width: 150px;
   display: flex;
   justify-content: space-around;
