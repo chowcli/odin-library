@@ -224,16 +224,17 @@ select {
 
 h3.title {
   font-size: 1.8rem;
-  font-weight: 600;
+  font-weight: 700;
   margin-bottom: 10px;
 }
 
 .book-card p {
   font-size: 1.2rem;
+  font-weight: 600;
 }
 
 .card-btn {
-  margin-top: 10px;
+  margin: 10px 0 0;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   gap: 50px;

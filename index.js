@@ -66,6 +66,7 @@ addSmall.addEventListener("click", () => {
   }
 
   addBookToLibrary(book);
+  createCard(book);
 });
 
 // Clear form fields
