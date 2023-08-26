@@ -4,9 +4,6 @@ const modal = document.querySelector(".modal");
 const closeModal = document.querySelector(".close");
 const resetBtn = document.querySelector(".reset");
 
-const changeBtn = document.querySelector(".changeBtn");
-const deleteBtn = document.querySelector(".deleteBtn");
-
 const addBig = document.getElementById("add-big");
 const addSmall = document.getElementById("add-small");
 
@@ -123,10 +120,6 @@ function createCard(book) {
     element.classList.add(`${btnText.toLowerCase()}Btn`);
     element.textContent = btnText;
 
-    if (btnText === "Delete") {
-      element.setAttribute("data-id", book.ID);
-    }
-
     cardBtns.appendChild(element);
   });
   bookCard.appendChild(cardBtns);
@@ -134,7 +127,7 @@ function createCard(book) {
   bookContainer.appendChild(bookCard);
 }
 
-// Interact with delete button
+// Interact with delete button, change button using event delegation
 function removeBookFromLibrary(id) {
   const bookIndex = myLibrary.findIndex(book => (book.ID = id));
   if (bookIndex !== -1) {
@@ -149,9 +142,14 @@ function removeBookCardElement(dataId) {
   }
 }
 
-deleteBtn.addEventListener("click", () => {
-  const id = deleteBtn.getAttribute("data-id");
+bookContainer.addEventListener("click", event => {
+  const { target } = event;
 
-  removeBookCardElement(id);
-  removeBookFromLibrary(id);
+  if (target.classList.contains("deleteBtn")) {
+    const bookCard = target.closest(".book-card");
+    const bookID = bookCard.getAttribute("data-id");
+
+    removeBookCardElement(bookID);
+    removeBookFromLibrary(bookID);
+  }
 });
