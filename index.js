@@ -133,12 +133,16 @@ bookContainer.addEventListener("click", event => {
 modal.addEventListener("click", event => {
   const { target } = event;
 
-  if (target.classList.contains("close")) {
+  if (!target.closest("button")) {
+    return;
+  }
+
+  if (target.closest(".close")) {
     modal.close();
     return;
   }
 
-  if (target.id === "add-small") {
+  if (target.closest("#add-small")) {
     const book = createBookObject();
 
     if (book === null) {
@@ -155,7 +159,7 @@ modal.addEventListener("click", event => {
     return;
   }
 
-  if (target.classList.contains("reset")) {
+  if (target.closest(".reset")) {
     clearInput();
   }
 });
