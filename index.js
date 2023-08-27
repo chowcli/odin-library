@@ -22,7 +22,7 @@ function Book(title, author, pages, language, date, status) {
   this.status = status;
 }
 
-Book.prototype.setBookID = function () {
+Book.prototype.setBookID = () => {
   this.ID = Math.floor(Math.random() * Math.floor(Math.random() * Date.now()));
 };
 
@@ -32,7 +32,7 @@ function addBookToLibrary(book) {
 
 // Function definitions
 function removeBookFromLibrary(id) {
-  const bookIndex = myLibrary.findIndex(book => (book.ID = id));
+  const bookIndex = myLibrary.findIndex(book => book.ID === id);
   if (bookIndex !== -1) {
     myLibrary.splice(bookIndex, 1);
   }
