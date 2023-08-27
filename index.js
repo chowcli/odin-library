@@ -32,7 +32,8 @@ function addBookToLibrary(book) {
 
 // Function definitions
 function removeBookFromLibrary(id) {
-  const bookIndex = myLibrary.findIndex(book => book.ID === id);
+  const numericId = Number(id);
+  const bookIndex = myLibrary.findIndex(book => book.ID === numericId);
   if (bookIndex !== -1) {
     myLibrary.splice(bookIndex, 1);
   }
