@@ -22,7 +22,7 @@ function Book(title, author, pages, language, date, status) {
   this.status = status;
 }
 
-Book.prototype.setBookID = () => {
+Book.prototype.setBookID = function () {
   this.ID = Math.floor(Math.random() * Math.floor(Math.random() * Date.now()));
 };
 
