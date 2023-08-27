@@ -48,6 +48,7 @@ function removeBookCardElement(dataId) {
 
 // Create book card
 function createCard(book) {
+  // create main book card element
   const bookCard = document.createElement("div");
   bookCard.classList.add("book-card");
   bookCard.setAttribute("data-id", book.ID); // assign data attribute with unique id to book card
@@ -77,8 +78,21 @@ function createCard(book) {
   ["Change", "Delete"].forEach(btnText => {
     const element = document.createElement("button");
     element.classList.add(`${btnText.toLowerCase()}Btn`);
-    element.textContent = btnText;
 
+    const child = document.createElement("img");
+    if (btnText === "Change") {
+      child.setAttribute("src", "images/pencil.svg");
+      child.setAttribute("alt", "modify-icon");
+    } else {
+      child.setAttribute("src", "images/trash-can-outline.svg");
+      child.setAttribute("alt", "delete-icon");
+    }
+    child.classList.add("svg");
+
+    // append img to button
+    element.appendChild(child);
+
+    // append button to button container
     cardBtns.appendChild(element);
   });
   bookCard.appendChild(cardBtns);
@@ -120,7 +134,7 @@ function clearInput() {
 bookContainer.addEventListener("click", event => {
   const { target } = event;
 
-  if (target.classList.contains("deleteBtn")) {
+  if (target.closest(".deleteBtn")) {
     const bookCard = target.closest(".book-card");
     const bookID = bookCard.getAttribute("data-id");
 
