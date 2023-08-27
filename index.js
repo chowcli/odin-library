@@ -161,5 +161,6 @@ modal.addEventListener("click", event => {
 
   if (target.closest(".reset")) {
     clearInput();
+    return;
   }
 });
