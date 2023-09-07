@@ -1,57 +1,54 @@
-// Declare variable
-const bookContainer = document.querySelector(".books-container");
-const modal = document.querySelector(".modal");
+// Library class
+class Library {
+  constructor() {
+    this.myLibrary = [];
+  }
 
-const addBig = document.getElementById("add-big");
+  avoidDuplicate(book) {
+    return this.myLibrary.some(existBook => existBook.title === book.title);
+  }
 
-// Open modal
-addBig.addEventListener("click", () => {
-  modal.showModal();
-  clearInput();
-});
+  addBookToLibrary(book) {
+    this.myLibrary.push(book);
+  }
 
-// Object constructor for library
-const myLibrary = [];
+  removeBookFromLibrary(bookId) {
+    const bookIndex = this.myLibrary.findIndex(
+      book => book.id === Number(bookId),
+    );
 
-function Book(title, author, pages, language, date, status) {
-  this.title = title;
-  this.author = author;
-  this.pages = pages;
-  this.language = language;
-  this.date = date;
-  this.status = status;
-}
-
-Book.prototype.setBookID = function () {
-  this.ID = Math.floor(Math.random() * Math.floor(Math.random() * Date.now()));
-};
-
-function addBookToLibrary(book) {
-  myLibrary.push(book);
-}
-
-// Function definitions
-function removeBookFromLibrary(id) {
-  const numericId = Number(id);
-  const bookIndex = myLibrary.findIndex(book => book.ID === numericId);
-  if (bookIndex !== -1) {
-    myLibrary.splice(bookIndex, 1);
+    if (bookIndex !== -1) {
+      this.myLibrary.splice(bookIndex, 1);
+    }
   }
 }
 
-function removeBookCardElement(dataId) {
-  const bookCard = document.querySelector(`[data-id="${dataId}"]`);
-  if (bookCard) {
-    bookCard.remove();
+// Book class
+class Book {
+  constructor(title, author, pages, language, date, status) {
+    this.title = title;
+    this.author = author;
+    this.pages = pages;
+    this.language = language;
+    this.date = date;
+    this.status = status;
+    this.id = Math.floor(
+      Math.random() * Math.floor(Math.random() * Date.now()),
+    );
   }
 }
 
-// Create book card
+// Create instance of Library class
+const myLibrary = new Library();
+
+//
+// Interact with the DOM
+
 function createCard(book) {
   // create main book card element
   const bookCard = document.createElement("div");
   bookCard.classList.add("book-card");
-  bookCard.setAttribute("data-id", book.ID); // assign data attribute with unique id to book card
+  bookCard.setAttribute("data-id", book.id); // assign data attribute with unique id to book card
 
   const cardDetail = [
     { tag: "h3", class: "title", text: `${book.title}` },
@@ -116,8 +113,11 @@ function createBookObject() {
   return book;
 }
 
-function avoidDuplicate(book) {
-  return myLibrary.some(existBook => existBook.title === book.title);
+function removeBookCardElement(dataId) {
+  const bookCard = document.querySelector(`[data-id="${dataId}"]`);
+  if (bookCard) {
+    bookCard.remove();
+  }
 }
 
 function clearInput() {
@@ -130,18 +130,15 @@ function clearInput() {
 }
 
 // Event listeners
-// Interact with delete button, change button using event delegation
-bookContainer.addEventListener("click", event => {
-  const { target } = event;
+const bookContainer = document.querySelector(".books-container");
+const modal = document.querySelector(".modal");
 
-  if (target.closest(".deleteBtn")) {
-    const bookCard = target.closest(".book-card");
-    const bookID = bookCard.getAttribute("data-id");
+const addBig = document.getElementById("add-big");
 
-    removeBookCardElement(bookID);
-    removeBookFromLibrary(bookID);
-    return;
-  }
+// Open modal
+addBig.addEventListener("click", () => {
+  modal.showModal();
+  clearInput();
 });
 
 // Event delegation for modal
@@ -163,19 +160,32 @@ modal.addEventListener("click", event => {
     if (book === null) {
       return;
     }
-    if (avoidDuplicate(book)) {
+    if (myLibrary.avoidDuplicate(book)) {
       alert("This book is already exist in your library!");
       return;
     }
-    book.setBookID(); // create unique book id
 
-    addBookToLibrary(book);
+    myLibrary.addBookToLibrary(book);
     createCard(book);
     return;
   }
 
   if (target.closest(".reset")) {
     clearInput();
+    return;
+  }
+});
+
+// Interact with delete button, change button using event delegation
+bookContainer.addEventListener("click", event => {
+  const { target } = event;
+
+  if (target.closest(".deleteBtn")) {
+    const bookCard = target.closest(".book-card");
+    const bookID = bookCard.getAttribute("data-id");
+
+    removeBookCardElement(bookID);
+    myLibrary.removeBookFromLibrary(bookID);
     return;
   }
 });
